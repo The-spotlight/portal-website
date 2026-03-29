@@ -1,8 +1,5 @@
 <template>
-  <div class="flex flex-col min-h-screen">
-    <Header />
-    
-    <main class="flex-1">
+  <main>
       <!-- Hero Section -->
       <section class="bg-gradient-to-r from-primary-600 to-primary-800 text-white py-20">
         <div class="container-custom">
@@ -64,25 +61,11 @@
           </div>
         </div>
       </section>
-    </main>
-
-    <Footer />
-    
-    <!-- Global Loading & Error -->
-    <LoadingSpinner :loading="appStore.loading" />
-    <ErrorMessage :error="appStore.error" @close="appStore.clearError" />
-  </div>
+  </main>
 </template>
 
 <script setup lang="ts">
-import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
-import ErrorMessage from '@/components/ErrorMessage.vue'
-import { useAppStore } from '@/stores/app'
 import { RouterLink } from 'vue-router'
-
-const appStore = useAppStore()
 
 const features = [
   {
