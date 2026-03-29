@@ -1,8 +1,5 @@
 <template>
-  <div class="flex flex-col min-h-screen">
-    <Header />
-    
-    <main class="flex-1 py-12">
+  <main class="py-12">
       <div class="container-custom">
         <h1 class="text-4xl font-bold mb-12 text-center">我们的服务</h1>
         
@@ -34,23 +31,10 @@
           </div>
         </div>
       </div>
-    </main>
-
-    <Footer />
-    
-    <LoadingSpinner :loading="appStore.loading" />
-    <ErrorMessage :error="appStore.error" @close="appStore.clearError" />
-  </div>
+  </main>
 </template>
 
 <script setup lang="ts">
-import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
-import ErrorMessage from '@/components/ErrorMessage.vue'
-import { useAppStore } from '@/stores/app'
-
-const appStore = useAppStore()
 
 const services = [
   {

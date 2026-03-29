@@ -1,8 +1,5 @@
 <template>
-  <div class="flex flex-col min-h-screen">
-    <Header />
-    
-    <main class="flex-1 py-12">
+  <main class="py-12">
       <div class="container-custom">
         <div class="max-w-4xl mx-auto">
           <h1 class="text-4xl font-bold mb-12 text-center">联系我们</h1>
@@ -101,22 +98,13 @@
           </div>
         </div>
       </div>
-    </main>
-
-    <Footer />
-    
-    <LoadingSpinner :loading="appStore.loading || submitting" />
-    <ErrorMessage :error="appStore.error" @close="appStore.clearError" />
-  </div>
+  </main>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
-import ErrorMessage from '@/components/ErrorMessage.vue'
 import { useAppStore } from '@/stores/app'
+import api from '@/utils/api'
 
 const appStore = useAppStore()
 
@@ -131,8 +119,7 @@ const form = ref({
 const handleSubmit = async () => {
   submitting.value = true
   try {
-    // 这里可以调用 API 发送消息
-    await new Promise(resolve => setTimeout(resolve, 1000)) // 模拟 API 调用
+    await api.post('/contact', form.value)
     alert('消息发送成功！我们会尽快回复您。')
     form.value = { name: '', email: '', message: '' }
   } catch (error) {
