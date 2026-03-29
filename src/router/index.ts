@@ -33,6 +33,14 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: '联系我们'
     }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: () => import('@/views/NotFound.vue'),
+    meta: {
+      title: '页面未找到'
+    }
   }
 ]
 
@@ -43,7 +51,7 @@ const router = createRouter({
     if (savedPosition) {
       return savedPosition
     } else {
-      return { top: 0 }
+      return { top: 0, behavior: 'smooth' }
     }
   }
 })
