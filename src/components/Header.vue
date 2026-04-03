@@ -13,6 +13,7 @@
             v-for="item in navItems"
             :key="item.path"
             :to="item.path"
+            :aria-label="item.label"
             class="text-gray-700 hover:text-primary-600 font-medium transition-colors relative group"
             active-class="text-primary-600"
           >
@@ -41,6 +42,7 @@
           v-for="item in navItems"
           :key="item.path"
           :to="item.path"
+          :aria-label="item.label"
           @click="mobileMenuOpen = false"
           class="block py-2 text-gray-700 hover:text-primary-600 font-medium transition-colors"
           active-class="text-primary-600"
