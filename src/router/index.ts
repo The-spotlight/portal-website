@@ -33,6 +33,14 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: '联系我们'
     }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: () => import('@/views/NotFound.vue'),
+    meta: {
+      title: '404 - 页面不存在'
+    }
   }
 ]
 
