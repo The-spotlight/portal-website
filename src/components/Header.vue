@@ -41,6 +41,7 @@
           v-for="item in navItems"
           :key="item.path"
           :to="item.path"
+          :aria-label="item.ariaLabel"
           @click="mobileMenuOpen = false"
           class="block py-2 text-gray-700 hover:text-primary-600 font-medium transition-colors"
           active-class="text-primary-600"
@@ -59,10 +60,10 @@ import { RouterLink } from 'vue-router'
 const mobileMenuOpen = ref(false)
 
 const navItems = [
-  { path: '/', label: '首页' },
-  { path: '/services', label: '服务' },
-  { path: '/about', label: '关于我们' },
-  { path: '/contact', label: '联系我们' }
+  { path: '/', label: '首页', ariaLabel: '前往首页' },
+  { path: '/services', label: '服务', ariaLabel: '前往服务页面' },
+  { path: '/about', label: '关于我们', ariaLabel: '前往关于我们页面' },
+  { path: '/contact', label: '联系我们', ariaLabel: '前往联系我们页面' }
 ]
 
 const toggleMobileMenu = () => {
