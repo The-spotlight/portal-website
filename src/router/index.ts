@@ -56,9 +56,18 @@ const router = createRouter({
   }
 })
 
+// 优化路由标题更新逻辑，确保标题即时生效
 router.beforeEach((to, _from, next) => {
-  document.title = to.meta.title ? `${to.meta.title} - 门户网站` : '门户网站'
+  // 优先更新标题，确保导航开始时就更新浏览器标签页标题
+  const title = to.meta.title ? `${to.meta.title} - 门户网站` : '门户网站'
+  document.title = title
   next()
+})
+
+// 监听路由变化，确保标题更新的可靠性
+router.afterEach((to) => {
+  const title = to.meta.title ? `${to.meta.title} - 门户网站` : '门户网站'
+  document.title = title
 })
 
 export default router
