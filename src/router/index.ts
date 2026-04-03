@@ -56,9 +56,8 @@ const router = createRouter({
   }
 })
 
-router.beforeEach((to, _from, next) => {
+router.afterEach((to) => {
   document.title = to.meta.title ? `${to.meta.title} - 门户网站` : '门户网站'
-  next()
 })
 
 export default router
