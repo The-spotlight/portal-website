@@ -34,8 +34,11 @@
       
       <!-- 移动端菜单 -->
       <div
-        v-show="mobileMenuOpen"
-        class="md:hidden py-4 border-t border-gray-200"
+        :class="[
+          'md:hidden py-4 border-t border-gray-200 transition-transform duration-300 ease-in-out transform',
+          mobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
+        ]"
+        style="position: absolute; left: 0; right: 0; background-color: white; z-index: -1;"
       >
         <RouterLink
           v-for="item in navItems"
@@ -54,10 +57,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
+import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 
-const route = useRoute()
 const mobileMenuOpen = ref(false)
 
 const navItems = [
@@ -70,8 +72,4 @@ const navItems = [
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
 }
-
-onMounted(() => {
-  document.title = route.meta.title ? `${route.meta.title} - 门户网站` : '门户网站'
-})
 </script>
