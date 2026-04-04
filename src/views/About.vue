@@ -5,6 +5,12 @@
         <h1 class="text-4xl font-bold mb-8 text-center">关于我们</h1>
         
         <div class="card mb-8">
+          <img
+            src="https://picsum.photos/seed/about1/800/400"
+            alt="公司简介"
+            loading="lazy"
+            class="w-full h-64 object-cover rounded-lg mb-4"
+          />
           <h2 class="text-2xl font-semibold mb-4">公司简介</h2>
           <p class="text-gray-700 leading-relaxed mb-4">
             我们是一家专注于提供优质服务和解决方案的公司，致力于为客户创造价值。
@@ -16,6 +22,12 @@
         </div>
 
         <div class="card mb-8">
+          <img
+            src="https://picsum.photos/seed/about2/800/400"
+            alt="我们的价值观"
+            loading="lazy"
+            class="w-full h-64 object-cover rounded-lg mb-4"
+          />
           <h2 class="text-2xl font-semibold mb-4">我们的价值观</h2>
           <ul class="space-y-3">
             <li class="flex items-start">
@@ -38,6 +50,12 @@
         </div>
 
         <div class="card">
+          <img
+            src="https://picsum.photos/seed/about3/800/400"
+            alt="联系我们"
+            loading="lazy"
+            class="w-full h-64 object-cover rounded-lg mb-4"
+          />
           <h2 class="text-2xl font-semibold mb-4">联系我们</h2>
           <p class="text-gray-700 mb-4">
             如果您有任何问题或需要帮助，欢迎随时与我们联系。

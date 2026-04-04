@@ -37,17 +37,25 @@
         v-show="mobileMenuOpen"
         class="md:hidden py-4 border-t border-gray-200"
       >
-        <RouterLink
-          v-for="item in navItems"
-          :key="item.path"
-          :to="item.path"
-          :aria-label="item.ariaLabel"
-          @click="mobileMenuOpen = false"
-          class="block py-2 text-gray-700 hover:text-primary-600 font-medium transition-colors"
-          active-class="text-primary-600"
+        <div
+          class="transition-all duration-300 ease-out"
+          :class="{
+            'opacity-100 translate-y-0': mobileMenuOpen,
+            'opacity-0 translate-y-4': !mobileMenuOpen
+          }"
         >
-          {{ item.label }}
-        </RouterLink>
+          <RouterLink
+            v-for="item in navItems"
+            :key="item.path"
+            :to="item.path"
+            :aria-label="item.ariaLabel"
+            @click="mobileMenuOpen = false"
+            class="block py-2 text-gray-700 hover:text-primary-600 font-medium transition-colors"
+            active-class="text-primary-600"
+          >
+            {{ item.label }}
+          </RouterLink>
+        </div>
       </div>
     </nav>
   </header>

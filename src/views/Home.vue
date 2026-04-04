@@ -32,6 +32,12 @@
             :key="index"
             class="card text-center group"
           >
+            <img
+              :src="feature.image"
+              :alt="feature.title"
+              loading="lazy"
+              class="w-full h-48 object-cover rounded-lg mb-4"
+            />
             <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-600 transition-colors">
               <span class="text-2xl">{{ feature.icon }}</span>
             </div>
@@ -52,6 +58,12 @@
             :key="index"
             class="card hover:scale-105 cursor-pointer"
           >
+            <img
+              :src="service.image"
+              :alt="service.title"
+              loading="lazy"
+              class="w-full h-48 object-cover rounded-lg mb-4"
+            />
             <div class="h-48 bg-gradient-to-br from-primary-400 to-primary-600 rounded-lg mb-4 flex items-center justify-center">
               <span class="text-4xl text-white">{{ service.icon }}</span>
             </div>
@@ -71,17 +83,20 @@ const features = [
   {
     icon: '🚀',
     title: '快速高效',
-    description: '采用最新技术栈，确保项目快速交付和高效运行'
+    description: '采用最新技术栈，确保项目快速交付和高效运行',
+    image: 'https://picsum.photos/seed/feature1/400/300'
   },
   {
     icon: '🛡️',
     title: '安全可靠',
-    description: '严格的安全标准和可靠的基础设施保障'
+    description: '严格的安全标准和可靠的基础设施保障',
+    image: 'https://picsum.photos/seed/feature2/400/300'
   },
   {
     icon: '💡',
     title: '创新理念',
-    description: '持续创新，为客户提供前沿的解决方案'
+    description: '持续创新，为客户提供前沿的解决方案',
+    image: 'https://picsum.photos/seed/feature3/400/300'
   }
 ]
 
@@ -89,22 +104,26 @@ const services = [
   {
     icon: '💻',
     title: 'Web 开发',
-    description: '专业的网站和应用开发服务'
+    description: '专业的网站和应用开发服务',
+    image: 'https://picsum.photos/seed/service1/400/300'
   },
   {
     icon: '📱',
     title: '移动应用',
-    description: 'iOS 和 Android 应用开发'
+    description: 'iOS 和 Android 应用开发',
+    image: 'https://picsum.photos/seed/service2/400/300'
   },
   {
     icon: '☁️',
     title: '云服务',
-    description: '云端部署和运维服务'
+    description: '云端部署和运维服务',
+    image: 'https://picsum.photos/seed/service3/400/300'
   },
   {
     icon: '🎨',
     title: 'UI/UX 设计',
-    description: '现代化的用户界面设计'
+    description: '现代化的用户界面设计',
+    image: 'https://picsum.photos/seed/service4/400/300'
   }
 ]
 </script>

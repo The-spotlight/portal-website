@@ -9,6 +9,12 @@
           :key="index"
           class="card"
         >
+          <img
+            :src="service.image"
+            :alt="service.title"
+            loading="lazy"
+            class="w-full h-48 object-cover rounded-lg mb-4"
+          />
           <div class="flex items-start mb-4">
             <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
               <span class="text-2xl">{{ service.icon }}</span>
@@ -40,6 +46,7 @@ const services = [
     icon: '💻',
     title: 'Web 开发',
     description: '专业的网站和应用开发服务',
+    image: 'https://picsum.photos/seed/svc1/400/300',
     features: [
       '响应式设计',
       '现代化技术栈',
@@ -51,6 +58,7 @@ const services = [
     icon: '📱',
     title: '移动应用',
     description: 'iOS 和 Android 应用开发',
+    image: 'https://picsum.photos/seed/svc2/400/300',
     features: [
       '原生应用开发',
       '跨平台解决方案',
@@ -62,6 +70,7 @@ const services = [
     icon: '☁️',
     title: '云服务',
     description: '云端部署和运维服务',
+    image: 'https://picsum.photos/seed/svc3/400/300',
     features: [
       '云服务器部署',
       '容器化方案',
@@ -73,6 +82,7 @@ const services = [
     icon: '🎨',
     title: 'UI/UX 设计',
     description: '现代化的用户界面设计',
+    image: 'https://picsum.photos/seed/svc4/400/300',
     features: [
       '用户体验设计',
       '视觉设计',
