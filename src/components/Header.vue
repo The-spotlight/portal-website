@@ -13,8 +13,10 @@
             v-for="item in navItems"
             :key="item.path"
             :to="item.path"
-            class="text-gray-700 hover:text-primary-600 font-medium transition-colors relative group"
-            active-class="text-primary-600"
+            :class="[
+              'text-gray-700 hover:text-primary-600 font-medium transition-colors relative group',
+              activeNavItem?.path === item.path ? 'text-primary-600' : ''
+            ]"
           >
             {{ item.label }}
             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-600 transition-all group-hover:w-full"></span>
@@ -43,8 +45,10 @@
           :to="item.path"
           :aria-label="item.ariaLabel"
           @click="mobileMenuOpen = false"
-          class="block py-2 text-gray-700 hover:text-primary-600 font-medium transition-colors"
-          active-class="text-primary-600"
+          :class="[
+            'block py-2 text-gray-700 hover:text-primary-600 font-medium transition-colors',
+            activeNavItem?.path === item.path ? 'text-primary-600' : ''
+          ]"
         >
           {{ item.label }}
         </RouterLink>
@@ -54,9 +58,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref, computed, onMounted } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 
+const route = useRoute()
 const mobileMenuOpen = ref(false)
 
 const navItems = [
@@ -66,7 +71,24 @@ const navItems = [
   { path: '/contact', label: '联系我们', ariaLabel: '前往联系我们页面' }
 ]
 
+// 计算当前活动的导航项
+const activeNavItem = computed(() => {
+  return navItems.find(item => {
+    // 对于根路径，精确匹配
+    if (item.path === '/') {
+      return route.path === '/'
+    }
+    // 对于其他路径，检查是否以该路径开头
+    return route.path.startsWith(item.path)
+  })
+})
+
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
 }
+
+// 确保组件挂载后路由状态正确同步
+onMounted(() => {
+  // 组件挂载后，路由状态已经就绪，确保导航高亮正确显示
+})
 </script>
