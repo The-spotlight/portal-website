@@ -102,9 +102,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import api from '@/utils/api'
+import { useAppStore } from '@/stores/app'
 
+const appStore = useAppStore()
 const submitting = ref(false)
 
 const form = ref({
@@ -125,4 +127,10 @@ const handleSubmit = async () => {
     submitting.value = false
   }
 }
+
+// 组件卸载时清除表单数据和错误状态
+onUnmounted(() => {
+  form.value = { name: '', email: '', message: '' }
+  appStore.clearError()
+})
 </script>

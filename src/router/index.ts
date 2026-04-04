@@ -57,7 +57,12 @@ const router = createRouter({
 })
 
 router.afterEach((to) => {
-  document.title = to.meta.title ? `${to.meta.title} - 门户网站` : '门户网站'
+  // 合并所有匹配路由的 meta 信息，子路由的 meta 会覆盖父路由的
+  const meta = to.matched.reduce((acc: any, route: any) => {
+    return { ...acc, ...route.meta }
+  }, {})
+  
+  document.title = meta.title ? `${meta.title} - 门户网站` : '门户网站'
 })
 
 export default router
