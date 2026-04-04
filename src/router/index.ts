@@ -57,7 +57,8 @@ const router = createRouter({
 })
 
 router.afterEach((to) => {
-  document.title = to.meta.title ? `${to.meta.title} - 门户网站` : '门户网站'
+  const pageTitle = to.matched.find(record => record.meta.title)?.meta.title as string
+  document.title = pageTitle ? `${pageTitle} - 门户网站` : '门户网站'
 })
 
 export default router

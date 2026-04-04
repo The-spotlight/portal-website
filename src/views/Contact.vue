@@ -102,9 +102,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onUnmounted } from 'vue'
+import { useAppStore } from '@/stores/app'
 import api from '@/utils/api'
 
+const appStore = useAppStore()
 const submitting = ref(false)
 
 const form = ref({
@@ -113,16 +115,28 @@ const form = ref({
   message: ''
 })
 
+const resetForm = () => {
+  form.value = { name: '', email: '', message: '' }
+  appStore.clearError()
+}
+
 const handleSubmit = async () => {
   submitting.value = true
+  appStore.setLoading(true)
   try {
     await api.post('/contact', form.value)
     alert('消息发送成功！我们会尽快回复您。')
-    form.value = { name: '', email: '', message: '' }
+    resetForm()
   } catch (error) {
     console.error('发送失败:', error)
+    appStore.setError('发送失败，请稍后重试')
   } finally {
     submitting.value = false
+    appStore.setLoading(false)
   }
 }
+
+onUnmounted(() => {
+  resetForm()
+})
 </script>

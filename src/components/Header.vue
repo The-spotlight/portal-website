@@ -54,9 +54,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 
+const route = useRoute()
 const mobileMenuOpen = ref(false)
 
 const navItems = [
@@ -69,4 +70,8 @@ const navItems = [
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
 }
+
+onMounted(() => {
+  document.title = route.meta.title ? `${route.meta.title} - 门户网站` : '门户网站'
+})
 </script>
