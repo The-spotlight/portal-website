@@ -54,6 +54,11 @@
 import { computed } from 'vue'
 import { useAppStore } from '@/stores/app'
 
+// 为 keep-alive 缓存设置组件名称
+defineOptions({
+  name: 'Services'
+})
+
 const appStore = useAppStore()
 
 const services = [

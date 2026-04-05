@@ -53,7 +53,6 @@
                 id="name"
                 v-model="form.name"
                 type="text"
-                @blur="validateField('name')"
                 class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                 :class="{
                   'border-gray-300': !errors.name,
@@ -72,7 +71,6 @@
                 id="email"
                 v-model="form.email"
                 type="email"
-                @blur="validateField('email')"
                 class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                 :class="{
                   'border-gray-300': !errors.email,
@@ -90,7 +88,6 @@
               <textarea
                 id="message"
                 v-model="form.message"
-                @blur="validateField('message')"
                 rows="6"
                 class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                 :class="{
@@ -138,33 +135,46 @@ const isValidEmail = (email: string): boolean => {
 }
 
 const validateField = (field: string): boolean => {
-  errors.value[field] = ''
+  // 保留现有的错误信息，只在验证通过时清空
+  let isValid = true
   
   switch (field) {
     case 'name':
       if (!form.value.name.trim()) {
         errors.value[field] = '请输入您的姓名'
+        isValid = false
       } else if (form.value.name.trim().length < 2) {
         errors.value[field] = '姓名至少需要2个字符'
+        isValid = false
+      } else {
+        errors.value[field] = ''
       }
       break
     case 'email':
       if (!form.value.email.trim()) {
         errors.value[field] = '请输入您的邮箱'
+        isValid = false
       } else if (!isValidEmail(form.value.email)) {
         errors.value[field] = '请输入有效的邮箱地址'
+        isValid = false
+      } else {
+        errors.value[field] = ''
       }
       break
     case 'message':
       if (!form.value.message.trim()) {
         errors.value[field] = '请输入您的消息'
+        isValid = false
       } else if (form.value.message.trim().length < 10) {
         errors.value[field] = '消息至少需要10个字符'
+        isValid = false
+      } else {
+        errors.value[field] = ''
       }
       break
   }
   
-  return !errors.value[field]
+  return isValid
 }
 
 const validateForm = (): boolean => {

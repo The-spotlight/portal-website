@@ -73,5 +73,10 @@
 import { RouterLink } from 'vue-router'
 import { useAppStore } from '@/stores/app'
 
+// 为 keep-alive 缓存设置组件名称
+defineOptions({
+  name: 'About'
+})
+
 const appStore = useAppStore()
 </script>
