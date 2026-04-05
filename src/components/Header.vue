@@ -36,9 +36,11 @@
           </button>
           
           <button
+            ref="menuButton"
             @click="toggleMobileMenu"
             class="md:hidden w-11 h-11 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
             aria-label="切换菜单"
+            :aria-expanded="mobileMenuOpen"
           >
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="mobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'" />
@@ -64,7 +66,7 @@
             :key="item.path"
             :to="item.path"
             :aria-label="item.ariaLabel"
-            @click="mobileMenuOpen = false"
+            @click="closeMobileMenu"
             class="block py-2 text-gray-700 hover:text-primary-600 font-medium transition-colors"
             active-class="text-primary-600"
           >
@@ -77,13 +79,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useAppStore } from '@/stores/app'
 
 const appStore = useAppStore()
 const route = useRoute()
 const mobileMenuOpen = ref(false)
+const menuButton = ref<HTMLButtonElement | null>(null)
 
 const navItems = [
   { path: '/', label: '首页', ariaLabel: '前往首页' },
@@ -96,7 +99,26 @@ const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
 }
 
+const closeMobileMenu = () => {
+  mobileMenuOpen.value = false
+  // 菜单关闭后将焦点归位到汉堡菜单按钮
+  if (menuButton.value) {
+    menuButton.value.focus()
+  }
+}
+
+const handleKeydown = (event: KeyboardEvent) => {
+  if (mobileMenuOpen.value && event.key === 'Escape') {
+    closeMobileMenu()
+  }
+}
+
 onMounted(() => {
   document.title = route.meta.title ? `${route.meta.title} - 门户网站` : '门户网站'
+  document.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
 })
 </script>
