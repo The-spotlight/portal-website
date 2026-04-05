@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+import { useAppStore } from '@/stores/app'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -56,7 +57,17 @@ const router = createRouter({
   }
 })
 
+router.beforeEach((to, from, next) => {
+  const appStore = useAppStore()
+  if (to.name !== from.name) {
+    appStore.setLoading(true)
+  }
+  next()
+})
+
 router.afterEach((to) => {
+  const appStore = useAppStore()
+  appStore.setLoading(false)
   const pageTitle = to.matched.find(record => record.meta.title)?.meta.title as string
   document.title = pageTitle ? `${pageTitle} - 门户网站` : '门户网站'
   window.scrollTo(0, 0)
