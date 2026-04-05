@@ -24,7 +24,7 @@
         <div class="flex items-center space-x-4">
           <button
             @click="appStore.toggleDarkMode"
-            class="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            class="w-12 h-12 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
             aria-label="切换暗色模式"
           >
             <svg v-if="appStore.isDarkMode" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@
           
           <button
             @click="toggleMobileMenu"
-            class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            class="md:hidden w-12 h-12 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
             aria-label="切换菜单"
           >
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
