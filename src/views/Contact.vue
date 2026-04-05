@@ -138,14 +138,14 @@ const isValidEmail = (email: string): boolean => {
 }
 
 const validateField = (field: string): boolean => {
-  errors.value[field] = ''
-  
   switch (field) {
     case 'name':
       if (!form.value.name.trim()) {
         errors.value[field] = '请输入您的姓名'
       } else if (form.value.name.trim().length < 2) {
         errors.value[field] = '姓名至少需要2个字符'
+      } else {
+        delete errors.value[field]
       }
       break
     case 'email':
@@ -153,6 +153,8 @@ const validateField = (field: string): boolean => {
         errors.value[field] = '请输入您的邮箱'
       } else if (!isValidEmail(form.value.email)) {
         errors.value[field] = '请输入有效的邮箱地址'
+      } else {
+        delete errors.value[field]
       }
       break
     case 'message':
@@ -160,6 +162,8 @@ const validateField = (field: string): boolean => {
         errors.value[field] = '请输入您的消息'
       } else if (form.value.message.trim().length < 10) {
         errors.value[field] = '消息至少需要10个字符'
+      } else {
+        delete errors.value[field]
       }
       break
   }

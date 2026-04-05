@@ -59,6 +59,7 @@ const router = createRouter({
 router.afterEach((to) => {
   const pageTitle = to.matched.find(record => record.meta.title)?.meta.title as string
   document.title = pageTitle ? `${pageTitle} - 门户网站` : '门户网站'
+  window.scrollTo(0, 0)
 })
 
 export default router
