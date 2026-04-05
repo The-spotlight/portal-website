@@ -197,6 +197,8 @@ const handleSubmit = async () => {
     await api.post('/contact', form.value)
     alert('消息发送成功！我们会尽快回复您。')
     resetForm()
+    // 滚动回顶部
+    appStore.scrollToTop()
   } catch (error) {
     console.error('发送失败:', error)
     appStore.setError('发送失败，请稍后重试')
