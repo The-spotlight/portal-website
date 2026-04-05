@@ -53,10 +53,15 @@
                 id="name"
                 v-model="form.name"
                 type="text"
-                required
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                @blur="validateField('name')"
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                :class="{
+                  'border-gray-300': !errors.name,
+                  'border-red-500': errors.name
+                }"
                 placeholder="请输入您的姓名"
               />
+              <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
             </div>
 
             <div>
@@ -67,10 +72,15 @@
                 id="email"
                 v-model="form.email"
                 type="email"
-                required
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                @blur="validateField('email')"
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                :class="{
+                  'border-gray-300': !errors.email,
+                  'border-red-500': errors.email
+                }"
                 placeholder="请输入您的邮箱"
               />
+              <p v-if="errors.email" class="mt-1 text-sm text-red-600">{{ errors.email }}</p>
             </div>
 
             <div>
@@ -80,11 +90,16 @@
               <textarea
                 id="message"
                 v-model="form.message"
-                required
+                @blur="validateField('message')"
                 rows="6"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                :class="{
+                  'border-gray-300': !errors.message,
+                  'border-red-500': errors.message
+                }"
                 placeholder="请输入您的消息"
               ></textarea>
+              <p v-if="errors.message" class="mt-1 text-sm text-red-600">{{ errors.message }}</p>
             </div>
 
             <button
@@ -115,18 +130,75 @@ const form = ref({
   message: ''
 })
 
+const errors = ref<Record<string, string>>({})
+
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+const validateField = (field: string): boolean => {
+  errors.value[field] = ''
+  
+  switch (field) {
+    case 'name':
+      if (!form.value.name.trim()) {
+        errors.value[field] = '请输入您的姓名'
+      } else if (form.value.name.trim().length < 2) {
+        errors.value[field] = '姓名至少需要2个字符'
+      }
+      break
+    case 'email':
+      if (!form.value.email.trim()) {
+        errors.value[field] = '请输入您的邮箱'
+      } else if (!isValidEmail(form.value.email)) {
+        errors.value[field] = '请输入有效的邮箱地址'
+      }
+      break
+    case 'message':
+      if (!form.value.message.trim()) {
+        errors.value[field] = '请输入您的消息'
+      } else if (form.value.message.trim().length < 10) {
+        errors.value[field] = '消息至少需要10个字符'
+      }
+      break
+  }
+  
+  return !errors.value[field]
+}
+
+const validateForm = (): boolean => {
+  const fields = ['name', 'email', 'message']
+  let isValid = true
+  
+  fields.forEach(field => {
+    if (!validateField(field)) {
+      isValid = false
+    }
+  })
+  
+  return isValid
+}
+
 const resetForm = () => {
   form.value = { name: '', email: '', message: '' }
+  errors.value = {}
   appStore.clearError()
 }
 
 const handleSubmit = async () => {
+  if (!validateForm()) {
+    return
+  }
+  
   submitting.value = true
   appStore.setLoading(true)
   try {
     await api.post('/contact', form.value)
     alert('消息发送成功！我们会尽快回复您。')
     resetForm()
+    // 滚动回顶部
+    appStore.scrollToTop()
   } catch (error) {
     console.error('发送失败:', error)
     appStore.setError('发送失败，请稍后重试')
