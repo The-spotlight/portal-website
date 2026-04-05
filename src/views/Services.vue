@@ -3,9 +3,19 @@
     <div class="container-custom">
       <h1 class="text-4xl font-bold mb-12 text-center">我们的服务</h1>
       
+      <div class="mb-8">
+        <input
+          v-model="appStore.serviceFilter"
+          @input="appStore.setServiceFilter(appStore.serviceFilter)"
+          type="text"
+          placeholder="搜索服务..."
+          class="w-full max-w-md mx-auto block px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+        />
+      </div>
+      
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div
-          v-for="(service, index) in services"
+          v-for="(service, index) in filteredServices"
           :key="index"
           class="card"
         >
@@ -41,6 +51,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useAppStore } from '@/stores/app'
+
+const appStore = useAppStore()
+
 const services = [
   {
     icon: '💻',
@@ -91,4 +106,16 @@ const services = [
     ]
   }
 ]
+
+const filteredServices = computed(() => {
+  if (!appStore.serviceFilter) {
+    return services
+  }
+  const filter = appStore.serviceFilter.toLowerCase()
+  return services.filter(service => 
+    service.title.toLowerCase().includes(filter) ||
+    service.description.toLowerCase().includes(filter) ||
+    service.features.some(feature => feature.toLowerCase().includes(filter))
+  )
+})
 </script>

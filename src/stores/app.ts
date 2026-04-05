@@ -24,11 +24,32 @@ export const useAppStore = defineStore('app', () => {
     error.value = null
   }
 
+  const isDarkMode = ref(false)
+
+  const toggleDarkMode = () => {
+    isDarkMode.value = !isDarkMode.value
+  }
+
+  const serviceFilter = ref('')
+
+  const setServiceFilter = (filter: string) => {
+    serviceFilter.value = filter
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return {
     loading,
     error,
     setLoading,
     setError,
-    clearError
+    clearError,
+    isDarkMode,
+    toggleDarkMode,
+    serviceFilter,
+    setServiceFilter,
+    scrollToTop
   }
 })
