@@ -1,5 +1,11 @@
 <template>
   <div id="app" class="min-h-screen">
+    <div
+      v-if="appStore.loading"
+      class="fixed top-0 left-0 right-0 z-50 h-1 bg-gray-200 overflow-hidden"
+    >
+      <div class="h-full bg-primary-600 animate-pulse" style="width: 100%;"></div>
+    </div>
     <Layout>
       <RouterView v-slot="{ Component }">
         <Transition
@@ -26,6 +32,9 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import Layout from '@/components/Layout.vue'
+import { useAppStore } from '@/stores/app'
+
+const appStore = useAppStore()
 
 const onEnter = (el: Element, done: () => void) => {
   const element = el as HTMLElement
